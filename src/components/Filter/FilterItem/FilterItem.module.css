@@ -1,0 +1,47 @@
+/* .filterWrapper{
+    position: relative;
+    display: inline-block;
+} */
+
+.filterButton {
+    display: block;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    border: 1px solid #ffffff;
+    border-radius: 60px;
+    padding: 6px 20px;
+}
+
+.filterButton:not(:last-child) {
+    margin-right: 10px;
+}
+
+.btnText:hover {
+    border-color: #d9b6ff;
+    color: #d9b6ff;
+    cursor: pointer;
+}
+
+.btnText:target {
+    border-color: #ad61ff;
+    color: #ad61ff;
+    cursor: pointer;
+}
+
+
+.dropDownList {
+    border-color: #ad61ff;
+    position: relative;
+    top: 60px;
+    left: -100px;
+}
+
+.dropDownListItem {
+    margin-top: 10px;
+    &:hover{
+        color: #ad61ff;
+        transition: all 0.3s;
+    }
+}

@@ -1,18 +1,14 @@
-import Image from "next/image";
-import styles from "./page.module.css";
-import Track from "@/components/Track/Track";
 import Navigation from "@/components/Navigation/Navigation";
 import Bar from "@/components/Bar/Bar";
-import Search from "@/components/Search/Search";
-import Filter from "@/components/Filter/Filter";
 import Sidebar from "@/components/Sidebar/Sidebar";
 import MainCenter from "@/components/MainCenter/MainCenter";
+import styles from "./page.module.css";
 
 export default function Home() {
   return (
-    <div className="wrapper">
-      <div className="container">
-        <main className="main">
+    <div className={styles.wrapper}>
+      <div className={styles.container}>
+        <main className={styles.main}>
           <Navigation/>
           <MainCenter/>
           <Sidebar/>
