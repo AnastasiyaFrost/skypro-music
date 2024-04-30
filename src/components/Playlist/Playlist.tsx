@@ -3,7 +3,7 @@ import Track from "../Track/Track";
 import styles from "./Playlist.module.css";
 import { getTracks } from "@/api/tracks";
 import { trackType } from "@/types";
-import Error from "@/app/Error";
+import ErrorPage from "@/app/error";
 
 export default async function Playlist() {
   let tracks: trackType[];
@@ -11,7 +11,7 @@ export default async function Playlist() {
   try {
     tracks = await getTracks(); 
   } catch (error:any) {
-    throw new Error(error.message);
+    return <ErrorPage error={error} reset={() => {}} />;
   }
   return (
     <div className={styles.centerblockContent}>

@@ -5,7 +5,7 @@ import { useEffect } from "react";
 
 
 
-export default function Error({ error, reset }: ErrorType) {
+export default function ErrorPage({ error, reset }: ErrorType) {
   useEffect(() => {
     // Логирование ошибки
     console.error(error);
