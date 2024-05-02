@@ -16,22 +16,25 @@ export default function FilterItem({
 }: FilterItemType) {
   return (
     <>
-      <div
-        onClick={() => handleFilterClick(title)}
-        className={classNames(styles.filterButton, styles.btnText)}
-      >
-        {title}
+      <div className={styles.wrapper}>
+        <div
+          onClick={() => handleFilterClick(title)}
+          className={classNames(styles.filterButton, styles.btnText, {[styles.active]:isOpen})}
+        >
+          {title}
+        </div>
+        {isOpen && (
+          <div className={styles.filterWrapper}>
+            <ul className={styles.dropDownList}>
+              {list.map((item, index) => (
+                <li className={styles.dropDownListItem} key={item} tabIndex={index}>
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
       </div>
-      {isOpen && (
-          <ul className={styles.dropDownList}>
-            {list.map((item) => (
-              <li className={styles.dropDownListItem} key={item}>
-                {item}
-              </li>
-            ))}
-          </ul>
-        
-      )}
     </>
   );
 }
