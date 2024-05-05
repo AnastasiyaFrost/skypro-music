@@ -45,6 +45,7 @@ export default function Playlist({setTrack}:PlaylistType) {
             name={track.name}
             author={track.author}
             album={track.album}
+            duration={track.duration_in_seconds}
             onClick={() => setTrack(track)}
           />
         ))}

@@ -12,6 +12,8 @@ export default function Bar({ track }: PlayerType) {
   const audioRef = useRef<null | HTMLAudioElement>(null);
   const [currentTime, setCurrentTime] = useState<number>(0);
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
+  const [isLooping, setIsLooping] = useState<boolean>(false);
+  const [currentTrackIndex, setCurrentTrackIndex] = useState(0);
 
   const duration = audioRef.current?.duration;
 
@@ -38,6 +40,14 @@ export default function Bar({ track }: PlayerType) {
       audioRef.current.currentTime = Number(event.target.value);
     }
   };
+  const handleLoop = ()=>{
+    setIsLooping((prev)=>!prev);
+    if(audioRef.current){
+      if(isLooping){
+        audioRef.current!.loop = true;
+      } else {audioRef.current!.loop = false;}
+    }
+  };
   return (
     <div className={styles.bar}>
       <div className={styles.barContent}>
@@ -59,7 +69,7 @@ export default function Bar({ track }: PlayerType) {
               </div>
               <div
                 onClick={togglePlay}
-                className={classNames(styles.playerBtnPlay, styles._btn)}
+                className={classNames(styles.playerBtnPlay, styles.btn)}
               >
                 <svg className={styles.playerBtnPlaySvg}>
                   <use
@@ -75,14 +85,19 @@ export default function Bar({ track }: PlayerType) {
                 </svg>
               </div>
               <div
-                className={classNames(styles.playerBtnRepeat, styles._btnIcon)}
+                onClick={handleLoop}
+                className={classNames(styles.playerBtnRepeat, styles.btnIcon)}
               >
-                <svg className={styles.playerBtnRepeatSvg}>
+                <svg
+                  className={classNames(styles.playerBtnRepeatSvg, {
+                    [styles.active]: isLooping,
+                  })}
+                >
                   <use xlinkHref="img/icon/sprite.svg#icon-repeat" />
                 </svg>
               </div>
               <div
-                className={classNames(styles.playerBtnShuffle, styles._btnIcon)}
+                className={classNames(styles.playerBtnShuffle, styles.btnIcon)}
               >
                 <svg className={styles.playerBtnShuffleSvg}>
                   <use xlinkHref="img/icon/sprite.svg#icon-shuffle" />
@@ -97,19 +112,19 @@ export default function Bar({ track }: PlayerType) {
                   </svg>
                 </div>
                 <div className={styles.trackPlayAuthor}>
-                  <a className={styles.trackPlayAuthorLink} href="http://">
-                    Ты та...
-                  </a>
+                  <span className={styles.trackPlayAuthorLink}>
+                    {track.name}
+                  </span>
                 </div>
                 <div className={styles.trackPlayAlbum}>
-                  <a className={styles.trackPlayAlbumLink} href="http://">
-                    Баста
-                  </a>
+                  <span className={styles.trackPlayAlbumLink}>
+                    {track.author}
+                  </span>
                 </div>
               </div>
               <div className={styles.trackPlayLikeDis}>
                 <div
-                  className={classNames(styles.trackPlayLike, styles._btnIcon)}
+                  className={classNames(styles.trackPlayLike, styles.btnIcon)}
                 >
                   <svg className={styles.trackPlayLikeSvg}>
                     <use xlinkHref="img/icon/sprite.svg#icon-like" />
@@ -118,7 +133,7 @@ export default function Bar({ track }: PlayerType) {
                 <div
                   className={classNames(
                     styles.trackPlayDislike,
-                    styles._btnIcon
+                    styles.btnIcon
                   )}
                 >
                   <svg className={styles.trackPlayDislikeSvg}>
@@ -135,9 +150,9 @@ export default function Bar({ track }: PlayerType) {
                   <use xlinkHref="img/icon/sprite.svg#icon-volume" />
                 </svg>
               </div>
-              <div className={classNames(styles.volumeProgress, styles._btn)}>
+              <div className={classNames(styles.volumeProgress, styles.btn)}>
                 <input
-                  className={classNames(styles.volumeProgressLine, styles._btn)}
+                  className={classNames(styles.volumeProgressLine, styles.btn)}
                   type="range"
                   name="range"
                 />

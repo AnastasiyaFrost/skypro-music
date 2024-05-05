@@ -4,10 +4,11 @@ type TrackType = {
   name: string;
   author: string;
   album: string;
+  duration: number,
   onClick: () => void;
 };
 
-export default function Track({ name, author, album, onClick }: TrackType) {
+export default function Track({ name, author, album, duration, onClick }: TrackType) {
   return (
     <>
       <div onClick={onClick} className={styles.playlistItem}>
@@ -34,7 +35,7 @@ export default function Track({ name, author, album, onClick }: TrackType) {
             <svg className={styles.trackTimeSvg}>
               <use xlinkHref="img/icon/sprite.svg#icon-like" />
             </svg>
-            <span className={styles.trackTimeText}>4:44</span>
+            <span className={styles.trackTimeText}>{duration}</span>
           </div>
         </div>
       </div>
