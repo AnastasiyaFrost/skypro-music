@@ -4,6 +4,8 @@ import styles from "./Bar.module.css";
 import classNames from "classnames";
 import { trackType } from "@/types";
 import ProgressBar from "../ProgressBar/ProgressBar";
+import VolumeBar from "../Volume/VolumeBar";
+import { toMMSS } from "@/common";
 type PlayerType = {
   track: trackType;
 };
@@ -13,9 +15,10 @@ export default function Bar({ track }: PlayerType) {
   const [currentTime, setCurrentTime] = useState<number>(0);
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [isLooping, setIsLooping] = useState<boolean>(false);
-  const [currentTrackIndex, setCurrentTrackIndex] = useState(0);
+  const [volume, setVolume] = useState(0.5);
 
   const duration = audioRef.current?.duration;
+  // const audioCurrentTime = audioRef.current?.currentTime || 0;
 
   const togglePlay = () => {
     if (audioRef.current) {
@@ -34,6 +37,12 @@ export default function Bar({ track }: PlayerType) {
     );
   }, []);
 
+  useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.volume = volume;
+    }
+  }, [volume]);
+
   const handleSeek = (event: ChangeEvent<HTMLInputElement>) => {
     if (audioRef.current) {
       setCurrentTime(Number(event.target.value));
@@ -48,6 +57,8 @@ export default function Bar({ track }: PlayerType) {
       } else {audioRef.current!.loop = false;}
     }
   };
+  
+
   return (
     <div className={styles.bar}>
       <div className={styles.barContent}>
@@ -62,7 +73,12 @@ export default function Bar({ track }: PlayerType) {
         <div className={styles.barPlayerBlock}>
           <div className={styles.barPlayer}>
             <div className={styles.playerControls}>
-              <div className={styles.playerBtnPrev}>
+              <div
+                onClick={() => {
+                  alert("Функция в разработке");
+                }}
+                className={styles.playerBtnPrev}
+              >
                 <svg className={styles.playerBtnPrevSvg}>
                   <use xlinkHref="img/icon/sprite.svg#icon-prev" />
                 </svg>
@@ -79,7 +95,12 @@ export default function Bar({ track }: PlayerType) {
                   />
                 </svg>
               </div>
-              <div className={styles.playerBtnNext}>
+              <div
+                onClick={() => {
+                  alert("Функция в разработке");
+                }}
+                className={styles.playerBtnNext}
+              >
                 <svg className={styles.playerBtnNextSvg}>
                   <use xlinkHref="img/icon/sprite.svg#icon-next" />
                 </svg>
@@ -97,6 +118,9 @@ export default function Bar({ track }: PlayerType) {
                 </svg>
               </div>
               <div
+                onClick={() => {
+                  alert("Функция в разработке");
+                }}
                 className={classNames(styles.playerBtnShuffle, styles.btnIcon)}
               >
                 <svg className={styles.playerBtnShuffleSvg}>
@@ -143,18 +167,30 @@ export default function Bar({ track }: PlayerType) {
               </div>
             </div>
           </div>
+          
           <div className={styles.barVolumeBlock}>
+            {audioRef.current && (
+                <div className={styles.audioTimer}>
+                  <span>
+                    {toMMSS(audioRef.current!.currentTime)}/{toMMSS(Number(duration))}
+                  </span>
+                </div>
+              )
+            }
             <div className={styles.volumeContent}>
               <div className={styles.volumeImage}>
                 <svg className={styles.volumeSvg}>
                   <use xlinkHref="img/icon/sprite.svg#icon-volume" />
                 </svg>
               </div>
+              
               <div className={classNames(styles.volumeProgress, styles.btn)}>
-                <input
-                  className={classNames(styles.volumeProgressLine, styles.btn)}
-                  type="range"
-                  name="range"
+                <VolumeBar
+                  min={0}
+                  max={1}
+                  step={0.1}
+                  value={volume}
+                  onChange={(e) => setVolume(Number(e.target.value))}
                 />
               </div>
             </div>
