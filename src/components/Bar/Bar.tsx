@@ -18,7 +18,6 @@ export default function Bar({ track }: PlayerType) {
   const [volume, setVolume] = useState(0.5);
 
   const duration = audioRef.current?.duration;
-  // const audioCurrentTime = audioRef.current?.currentTime || 0;
 
   const togglePlay = () => {
     if (audioRef.current) {
@@ -50,11 +49,19 @@ export default function Bar({ track }: PlayerType) {
     }
   };
   const handleLoop = ()=>{
-    setIsLooping((prev)=>!prev);
+    console.log("isLooping:" + isLooping);
+    setIsLooping(!isLooping);
+    console.log("isLooping:" + isLooping);
     if(audioRef.current){
-      if(isLooping){
+      if(isLooping===true){
+        console.log("аудио луп:"+audioRef.current!.loop);
         audioRef.current!.loop = true;
-      } else {audioRef.current!.loop = false;}
+        console.log("аудио луп:" + audioRef.current!.loop);
+      } else {
+        console.log("аудио луп:" + audioRef.current!.loop);
+        audioRef.current!.loop = false;
+        console.log("аудио луп:" + audioRef.current!.loop);
+      }
     }
   };
   
@@ -111,7 +118,7 @@ export default function Bar({ track }: PlayerType) {
               >
                 <svg
                   className={classNames(styles.playerBtnRepeatSvg, {
-                    [styles.active]: isLooping,
+                    [styles.active]:(isLooping===false),
                   })}
                 >
                   <use xlinkHref="img/icon/sprite.svg#icon-repeat" />
