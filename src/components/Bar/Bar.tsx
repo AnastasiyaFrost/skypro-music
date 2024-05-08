@@ -53,15 +53,8 @@ export default function Bar({ track }: PlayerType) {
     setIsLooping(!isLooping);
     console.log("isLooping:" + isLooping);
     if(audioRef.current){
-      if(isLooping===true){
-        console.log("аудио луп:"+audioRef.current!.loop);
-        audioRef.current!.loop = true;
-        console.log("аудио луп:" + audioRef.current!.loop);
-      } else {
-        console.log("аудио луп:" + audioRef.current!.loop);
-        audioRef.current!.loop = false;
-        console.log("аудио луп:" + audioRef.current!.loop);
-      }
+        audioRef.current!.loop = !isLooping;
+        
     }
   };
   
@@ -118,7 +111,7 @@ export default function Bar({ track }: PlayerType) {
               >
                 <svg
                   className={classNames(styles.playerBtnRepeatSvg, {
-                    [styles.active]:(isLooping===false),
+                    [styles.active]:isLooping,
                   })}
                 >
                   <use xlinkHref="img/icon/sprite.svg#icon-repeat" />
