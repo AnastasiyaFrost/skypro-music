@@ -4,41 +4,41 @@ type TrackType = {
   name: string;
   author: string;
   album: string;
+  duration: number,
+  onClick: () => void;
 };
 
-export default function Track({ name, author, album }: TrackType) {
+export default function Track({ name, author, album, duration, onClick }: TrackType) {
   return (
-    <div className={styles.playlistItem}>
-      <div className={styles.playlistTrack}>
-        <div className={styles.trackTitle}>
-          <div className={styles.trackTitleImage}>
-            <svg className={styles.trackTitleSvg}>
-              <use xlinkHref="img/icon/sprite.svg#icon-note" />
-            </svg>
+    <>
+      <div onClick={onClick} className={styles.playlistItem}>
+        <div className={styles.playlistTrack}>
+          <div className={styles.trackTitle}>
+            <div className={styles.trackTitleImage}>
+              <svg className={styles.trackTitleSvg}>
+                <use xlinkHref="img/icon/sprite.svg#icon-note" />
+              </svg>
+            </div>
+            <div>
+              <span className={styles.trackTitleLink}>
+                {name} <span className={styles.trackTitleSpan} />
+              </span>
+            </div>
+          </div>
+          <div className={styles.trackAuthor}>
+            <span className={styles.trackAuthorLink}>{author}</span>
+          </div>
+          <div className={styles.trackAlbum}>
+            <span className={styles.trackAlbumLink}>{album}</span>
           </div>
           <div>
-            <a className={styles.trackTitleLink} href="http://">
-              {name} <span className={styles.trackTitleSpan} />
-            </a>
+            <svg className={styles.trackTimeSvg}>
+              <use xlinkHref="img/icon/sprite.svg#icon-like" />
+            </svg>
+            <span className={styles.trackTimeText}>{duration}</span>
           </div>
         </div>
-        <div className={styles.trackAuthor}>
-          <a className={styles.trackAuthorLink} href="http://">
-            {author}
-          </a>
-        </div>
-        <div className={styles.trackAlbum}>
-          <a className={styles.trackAlbumLink} href="http://">
-            {album}
-          </a>
-        </div>
-        <div>
-          <svg className={styles.trackTimeSvg}>
-            <use xlinkHref="img/icon/sprite.svg#icon-like" />
-          </svg>
-          <span className={styles.trackTimeText}>4:44</span>
-        </div>
       </div>
-    </div>
+    </>
   );
 }

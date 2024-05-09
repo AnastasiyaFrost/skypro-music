@@ -1,4 +1,4 @@
-._btn {
+.btn {
     cursor: pointer;
 }
 
@@ -67,6 +67,17 @@
     padding: 0 92px 0 0;
 }
 
+.audioTimer {
+    width: auto;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    padding: 0 92px 0 0;
+}
+
 .playerControls {
     display: -webkit-box;
     display: -ms-flexbox;
@@ -123,20 +134,20 @@
     stroke: #d9d9d9;
 }
 
-._btnIcon:hover svg {
+.btnIcon:hover svg {
     fill: transparent;
     stroke: #acacac;
     cursor: pointer;
 }
 
-._btnIcon:active svg {
+.btnIcon:active svg {
     fill: transparent;
     stroke: #ffffff;
     cursor: pointer;
 }
 
-._btnIcon:active .trackPlayLikeSvg,
-._btnIcon:active .trackPlayDislikeSvg {
+.btnIcon:active .trackPlayLikeSvg,
+.btnIcon:active .trackPlayDislikeSvg {
     fill: #696969;
     stroke: #ffffff;
     cursor: pointer;
@@ -318,6 +329,9 @@
     width: 109px;
 }
 
-.volumeProgressLine {
-    width: 109px;
+
+
+.active {
+    fill: #ffffff;
+    stroke: #ffffff;
 }

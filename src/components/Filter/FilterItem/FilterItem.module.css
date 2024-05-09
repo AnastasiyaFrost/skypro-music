@@ -54,7 +54,7 @@
     min-width: 248px;
     height: 305px;
     overflow: scroll;
-    
+
     scrollbar-color: #ffff;
     scrollbar-width: 5px;
     top: 288px;
@@ -67,12 +67,12 @@
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
-    
+
 }
 
 .dropDownListItem {
 
-    
+
     &:hover {
         color: #d9b6ff;
         transition: all 0.3s;
