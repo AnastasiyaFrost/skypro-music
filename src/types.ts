@@ -23,7 +23,3 @@ export type ErrorType = {
   error: Error;
   reset: () => void;
 };
-
-export type PlaylistType = {
-  setTrack: (param: trackType) => void;
-};
