@@ -6,41 +6,44 @@ import ProgressBar from "../ProgressBar/ProgressBar";
 import VolumeBar from "../Volume/VolumeBar";
 import { toMMSS } from "@/common";
 import { useAppDispatch, useAppSelector } from "@/hooks";
-import { setIsShuffled, setNextTrack, setPrevTrack } from "@/store/features/playlistSlice";
+import { setIsPlaying, setIsShuffled, setNextTrack, setPrevTrack } from "@/store/features/playlistSlice";
 
 export default function Bar() {
   const audioRef = useRef<null | HTMLAudioElement>(null);
   const [currentTime, setCurrentTime] = useState<number>(0);
-  const [isPlaying, setIsPlaying] = useState<boolean>(false);
+  // const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [isLooping, setIsLooping] = useState<boolean>(false);
   const [volume, setVolume] = useState(0.5);
-  const [currentTrackIndex, setCurrentTrackIndex] = useState(0);
 
   const currentTrack = useAppSelector((state) => state.playlist.currentTrack);
   const isShuffled = useAppSelector((state) => state.playlist.isShuffled);
+  const isPlaying = useAppSelector((state) => state.playlist.isPlaying);
   const dispatch = useAppDispatch();
 
   const duration = audioRef.current?.duration;
 
   const togglePlay = () => {
     if (audioRef.current) {
-      if (isPlaying) {
-        audioRef.current.pause();
-      } else {
-        audioRef.current.play();
-      }
-      setIsPlaying(!isPlaying);
+      dispatch(setIsPlaying(!isPlaying));
     }
   };
+  useEffect(()=>{
+    if(isPlaying){
+      audioRef.current?.play();
+    } else {audioRef.current?.pause()}
+  }, [isPlaying]);
 
   useEffect(() => {
     audioRef.current?.addEventListener("timeupdate", () => {
       setCurrentTime(audioRef.current!.currentTime);
     });
-  }, []);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [audioRef.current]);
 
   useEffect(() => {
-    audioRef.current?.addEventListener("ended", ()=>{dispatch(setNextTrack());});
+    audioRef.current?.addEventListener("ended", () => {
+      dispatch(setNextTrack());
+    });
 
     // Воспроизводим новый трек
     audioRef.current?.play();
@@ -50,7 +53,8 @@ export default function Bar() {
         dispatch(setNextTrack());
       });
     };
-  }, [currentTrack, dispatch ]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [audioRef.current, dispatch]);
 
   useEffect(() => {
     if (audioRef.current) {
