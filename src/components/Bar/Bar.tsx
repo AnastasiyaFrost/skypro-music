@@ -42,17 +42,18 @@ export default function Bar() {
 
   useEffect(() => {
     audioRef.current?.addEventListener("ended", () => {
+      console.log("Ended случился")
       dispatch(setNextTrack());
     });
 
     // Воспроизводим новый трек
     audioRef.current?.play();
 
-    return () => {
-      audioRef.current?.addEventListener("ended", () => {
-        dispatch(setNextTrack());
-      });
-    };
+    // return () => {
+    //   audioRef.current?.addEventListener("ended", () => {
+    //     dispatch(setNextTrack());
+    //   });
+    // };
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [audioRef.current, dispatch]);
 
