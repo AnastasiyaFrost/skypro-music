@@ -14,6 +14,7 @@ export default function Bar() {
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [isLooping, setIsLooping] = useState<boolean>(false);
   const [volume, setVolume] = useState(0.5);
+  const [currentTrackIndex, setCurrentTrackIndex] = useState(0);
 
   const currentTrack = useAppSelector((state) => state.playlist.currentTrack);
   const isShuffled = useAppSelector((state) => state.playlist.isShuffled);
@@ -39,21 +40,23 @@ export default function Bar() {
   }, []);
 
   useEffect(() => {
+    audioRef.current?.addEventListener("ended", ()=>{dispatch(setNextTrack());});
+
+    // Воспроизводим новый трек
+    audioRef.current?.play();
+
+    return () => {
+      audioRef.current?.addEventListener("ended", () => {
+        dispatch(setNextTrack());
+      });
+    };
+  }, [currentTrack, dispatch ]);
+
+  useEffect(() => {
     if (audioRef.current) {
       audioRef.current.volume = volume;
     }
   }, [volume]);
-
-  useEffect(() => {
-    audioRef.current?.addEventListener("ended", ()=>{dispatch(setNextTrack());});
-
-    // Воспроизводим новый трек
-    
-
-    // return () => {
-    //   audio.removeEventListener("ended", handleEnded);
-    // };
-  }, [dispatch]);
 
   const handleSeek = (event: ChangeEvent<HTMLInputElement>) => {
     if (audioRef.current) {
