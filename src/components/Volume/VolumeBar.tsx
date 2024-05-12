@@ -1,4 +1,4 @@
-import { ChangeEvent } from "react";
+import React, { ChangeEvent } from "react";
 import styles from "./VolumeBar.module.css";
 import classNames from "classnames";
 
@@ -10,13 +10,13 @@ type VolumeBarType = {
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
 };
 
-export default function VolumeBar({
+const VolumeBar = React.memo(({
   min,
   max,
   step,
   value,
   onChange,
-}: VolumeBarType) {
+}: VolumeBarType) => {
   return (
     <input
       className={classNames(styles.volumeProgressLine, styles.btn)}
@@ -29,4 +29,6 @@ export default function VolumeBar({
       onChange={onChange}
     />
   );
-}
+})
+VolumeBar.displayName = "VolumeBar";
+export default VolumeBar;

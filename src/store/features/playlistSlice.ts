@@ -10,6 +10,7 @@ type PlaylistStateType = {
   isShuffled: boolean;
   filterOptions: {
     author: string[];
+    genre: string[];
     searchValue: string;
   };
   filteredTracks: trackType[];
@@ -24,6 +25,7 @@ const initialState: PlaylistStateType = {
   isShuffled: false,
   filterOptions: {
     author: [],
+    genre: [],
     searchValue: "",
   },
   filteredTracks: [],
@@ -82,10 +84,11 @@ const playlistSlice = createSlice({
     },
     setFilters: (
       state,
-      action: PayloadAction<{ author?: string[]; searchValue?: string }>
+      action: PayloadAction<{ author?: string[]; genre?: string[]; searchValue?: string }>
     ) => {
       state.filterOptions = {
         author: action.payload.author || state.filterOptions.author,
+        genre: action.payload.genre || state.filterOptions.genre,
         searchValue:
           action.payload.searchValue || state.filterOptions.searchValue,
       };
@@ -94,7 +97,15 @@ const playlistSlice = createSlice({
         const isAuthors = hasAuthors
           ? state.filterOptions.author.includes(t.author)
           : true;
-        return isAuthors;
+        const hasGenres = state.filterOptions.genre.length !==0;
+        const isGenres = hasGenres ? state.filterOptions.genre.includes(t.genre) : true;
+        const hasSearchValue = t.name
+            .toLowerCase()
+            .includes(state.filterOptions.searchValue.toLowerCase());
+        if(hasAuthors) {
+          return isAuthors && hasSearchValue;
+        } else {return hasGenres && hasSearchValue};
+
       });
     },
   },

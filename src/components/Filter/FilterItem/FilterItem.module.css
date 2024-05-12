@@ -26,7 +26,7 @@
     border-radius: 60px;
     padding: 6px 20px;
     margin-right: 10px;
-
+    position: relative;
     /* &:focus {
         color: #B672FF;
         border-color: #9A48F1;
@@ -83,6 +83,22 @@
         text-decoration-line: underline;
 
     }
+}
+
+.selectedFilters {
+    position: absolute;
+    color: #ffffff;
+    background-color: #9A48F1;
+    top: -8px;
+    right: -5px;
+    width: 26px;
+    height: 26px;
+    border-radius: 100%;
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 13px;
+    text-align: left;
+    padding: 10px;
 }
 
 .active {

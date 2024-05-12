@@ -1,5 +1,6 @@
 'use client'
 
+import { useAppSelector } from "@/hooks";
 import styles from "./Filter.module.css";
 import FilterItem from "./FilterItem/FilterItem";
 import { useState } from "react";
@@ -20,6 +21,12 @@ export const order = [
 
 export default function Filter() {
   const [activeFilter, setActiveFilter] = useState<string | null>(null);
+  const authorsList = useAppSelector(
+    (state) => state.playlist.filterOptions.author
+  );
+  const genresList = useAppSelector(
+    (state) => state.playlist.filterOptions.genre
+  );
   function handleFilterClick(newFilter: string) {
     setActiveFilter((prev) => (prev === newFilter ? null : newFilter));
   }
@@ -40,18 +47,21 @@ export default function Filter() {
         handleFilterClick={handleFilterClick}
         title={filters[0].title}
         value={"author"}
+        filtersCount={authorsList.length}
       />
       <FilterItem
         isOpen={activeFilter === filters[1].title}
         handleFilterClick={handleFilterClick}
         title={filters[1].title}
         value={"genre"}
+        filtersCount={genresList.length}
       />
       <FilterItem
         isOpen={activeFilter === filters[2].title}
         handleFilterClick={handleFilterClick}
         title={filters[2].title}
         value={"order"}
+        filtersCount={0}
       />
     </div>
   );

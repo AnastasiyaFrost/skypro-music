@@ -10,6 +10,7 @@ type FilterItemType = {
   value: "author" | "genre" | "order";
   handleFilterClick: (newFilter: string) => void;
   isOpen: boolean;
+  filtersCount: number;
 };
 
 export default function FilterItem({
@@ -17,10 +18,22 @@ export default function FilterItem({
   value,
   handleFilterClick,
   isOpen,
+  filtersCount
 }: FilterItemType) {
   const playlist = useAppSelector((state) => state.playlist.defaultPlaylist);
-const authorsList = useAppSelector((state)=>state.playlist.filterOptions.author);
-const dispatch = useAppDispatch();
+  const authorsList = useAppSelector(
+    (state) => state.playlist.filterOptions.author
+  );
+  const genresList = useAppSelector(
+    (state) => state.playlist.filterOptions.genre
+  );
+  const dispatch = useAppDispatch();
+  // const hasSelectedFilters =
+  //   isOpen &&
+  //   ((value === "author" && authorsList.length > 0) ||
+  //     (value === "genre" && genresList.length > 0));
+  // const filtersCount = authorsList.length || genresList.length;
+
   const getFilterList = () => {
     if (value !== "order") {
       const filterSet = new Set(
@@ -33,13 +46,23 @@ const dispatch = useAppDispatch();
   getFilterList();
 
   const toggleFilter = (item: string) => {
-    dispatch(
-      setFilters({
-        author: authorsList.includes(item)
-          ? authorsList.filter((el) => el !== item)
-          : [...authorsList, item],
-      })
-    );
+    if (value === "author") {
+      dispatch(
+        setFilters({
+          author: authorsList.includes(item)
+            ? authorsList.filter((el) => el !== item)
+            : [...authorsList, item],
+        })
+      );
+    } else if (value === "genre") {
+      dispatch(
+        setFilters({
+          genre: genresList.includes(item)
+            ? genresList.filter((el) => el !== item)
+            : [...genresList, item],
+        })
+      );
+    }
   };
 
   return (
@@ -52,12 +75,20 @@ const dispatch = useAppDispatch();
           })}
         >
           {title}
+          {filtersCount > 0 && (
+            <div
+              className={styles.selectedFilters}
+            >
+              {filtersCount}
+            </div>
+          )}
         </div>
         {isOpen && (
           <div className={styles.filterWrapper}>
             <ul className={styles.dropDownList}>
               {getFilterList().map((item, index) => (
-                <li onClick={(item)=>toggleFilter}
+                <li
+                  onClick={() => toggleFilter(item)}
                   className={styles.dropDownListItem}
                   key={item}
                   tabIndex={index}
