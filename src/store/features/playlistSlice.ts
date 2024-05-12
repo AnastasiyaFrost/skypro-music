@@ -104,7 +104,7 @@ const playlistSlice = createSlice({
             .includes(state.filterOptions.searchValue.toLowerCase());
         if(hasAuthors) {
           return isAuthors && hasSearchValue;
-        } else {return hasGenres && hasSearchValue};
+        } else {return isGenres && hasSearchValue};
 
       });
     },
