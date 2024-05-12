@@ -1,18 +1,32 @@
+"use client";
 import classNames from "classnames";
 import Track from "../Track/Track";
 import styles from "./Playlist.module.css";
 import { getTracks } from "@/api/tracks";
 import { trackType } from "@/types";
 import ErrorPage from "@/app/error";
+import { useAppDispatch, useAppSelector } from "@/hooks";
+import { setDefaultPlaylist } from "@/store/features/playlistSlice";
+import { useEffect, useState } from "react";
 
-export default async function Playlist() {
-  let tracks: trackType[];
+export default function Playlist() {
+  const dispatch = useAppDispatch();
+  const filteredTracks = useAppSelector(
+    (state) => state.playlist.filteredTracks
+  );
+  const [tracks, setTracks] = useState<trackType[]>([]);
+  
 
-  try {
-    tracks = await getTracks();
-  } catch (error: any) {
-    return <ErrorPage error={error} reset={() => {}} />;
-  }
+  useEffect(() => {
+    getTracks()
+      .then((tracksData) => {
+        dispatch(setDefaultPlaylist(tracksData));
+        setTracks(tracksData);
+      })
+      .catch((error) => {
+        return <ErrorPage error={error} reset={() => {}} />;
+      });
+  }, [dispatch]);
 
   return (
     <div className={styles.centerblockContent}>
@@ -33,7 +47,7 @@ export default async function Playlist() {
         </div>
       </div>
       <div className={styles.contentPlaylist}>
-        {tracks.map((track) => (
+        {filteredTracks.map((track) => (
           <Track key={track.id} track={track} tracks={tracks} />
         ))}
       </div>

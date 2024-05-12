@@ -7,30 +7,15 @@ import { useState } from "react";
 const filters = [
   {
     title: "Исполнителю",
-    list: [
-      "Иван",
-      "Даша",
-      "Ирина",
-      "Артём",
-      "Милана",
-      "Ольга",
-      "Никита",
-      "Кирилл",
-      "Мария",
-      "Лиза",
-      "Даша",
-      "Ирина",
-      "Артём",
-      "Милана",
-      "Ольга",
-      "Никита",
-      "Кирилл",
-      "Мария",
-      "Лиза",
-    ],
+    value: "author",
   },
-  { title: "Году выпуска", list: ["2022", "2024"] },
-  { title: "Жанру", list: ["k-pop", "шансон"] },
+  { title: "Жанру", value: "genre" },
+  { title: "Году выпуска", value: "order" },
+];
+export const order = [
+  'по умолчанию',
+  "сначала новые",
+  "сначала старые"
 ];
 
 export default function Filter() {
@@ -41,12 +26,33 @@ export default function Filter() {
   return (
     <div className={styles.centerblockFilter}>
       <div className={styles.filterTitle}>Искать по:</div>
-      {filters.map((filter)=> (<FilterItem key={filter.title}
-        isOpen={activeFilter === filter.title}
+      {/* {filters.map((filter) => (
+        <FilterItem
+          key={filter.title}
+          isOpen={activeFilter === filter.title}
+          handleFilterClick={handleFilterClick}
+          title={filter.title}
+          value={filter.value}
+        />
+      ))} */}
+      <FilterItem
+        isOpen={activeFilter === filters[0].title}
         handleFilterClick={handleFilterClick}
-        title={filter.title}
-        list={filter.list}
-      />))}
+        title={filters[0].title}
+        value={"author"}
+      />
+      <FilterItem
+        isOpen={activeFilter === filters[1].title}
+        handleFilterClick={handleFilterClick}
+        title={filters[1].title}
+        value={"genre"}
+      />
+      <FilterItem
+        isOpen={activeFilter === filters[2].title}
+        handleFilterClick={handleFilterClick}
+        title={filters[2].title}
+        value={"order"}
+      />
     </div>
   );
 }
