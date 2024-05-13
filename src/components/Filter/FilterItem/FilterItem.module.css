@@ -70,20 +70,20 @@
 
 }
 
+.dropDownListItemfocus {
+    color: #ad61ff;
+    text-decoration-line: underline;
+
+
+}
+
 .dropDownListItem {
-
-
     &:hover {
         color: #d9b6ff;
         transition: all 0.3s;
     }
-
-    &:focus {
-        color: #ad61ff;
-        text-decoration-line: underline;
-
-    }
 }
+
 
 .selectedFilters {
     position: absolute;

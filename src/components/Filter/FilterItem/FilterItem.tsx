@@ -28,11 +28,7 @@ export default function FilterItem({
     (state) => state.playlist.filterOptions.genre
   );
   const dispatch = useAppDispatch();
-  // const hasSelectedFilters =
-  //   isOpen &&
-  //   ((value === "author" && authorsList.length > 0) ||
-  //     (value === "genre" && genresList.length > 0));
-  // const filtersCount = authorsList.length || genresList.length;
+  
 
   const getFilterList = () => {
     if (value !== "order") {
@@ -76,26 +72,33 @@ export default function FilterItem({
         >
           {title}
           {filtersCount > 0 && (
-            <div
-              className={styles.selectedFilters}
-            >
-              {filtersCount}
-            </div>
+            <div className={styles.selectedFilters}>{filtersCount}</div>
           )}
         </div>
         {isOpen && (
           <div className={styles.filterWrapper}>
             <ul className={styles.dropDownList}>
-              {getFilterList().map((item, index) => (
-                <li
-                  onClick={() => toggleFilter(item)}
-                  className={styles.dropDownListItem}
-                  key={item}
-                  tabIndex={index}
-                >
-                  {item}
-                </li>
-              ))}
+              {getFilterList().map((item, index) =>
+                authorsList.includes(item) || genresList.includes(item) ? (
+                  <li
+                    onClick={() => toggleFilter(item)}
+                    className={styles.dropDownListItemfocus}
+                    key={item}
+                    tabIndex={index}
+                  >
+                    {item}
+                  </li>
+                ) : (
+                  <li
+                    onClick={() => toggleFilter(item)}
+                    className={styles.dropDownListItem}
+                    key={item}
+                    tabIndex={index}
+                  >
+                    {item}
+                  </li>
+                )
+              )}
             </ul>
           </div>
         )}
