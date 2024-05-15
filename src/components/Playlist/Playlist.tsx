@@ -9,24 +9,21 @@ import { useAppDispatch, useAppSelector } from "@/hooks";
 import { setDefaultPlaylist } from "@/store/features/playlistSlice";
 import { useEffect, useState } from "react";
 
-export default function Playlist() {
-  const dispatch = useAppDispatch();
-  const filteredTracks = useAppSelector(
-    (state) => state.playlist.filteredTracks
-  );
-  const [tracks, setTracks] = useState<trackType[]>([]);
-  
+export default function Playlist({ tracks, playlist }: { tracks: trackType[]; playlist: trackType[]}) {
+  // const dispatch = useAppDispatch();
+  // const filteredTracks = useAppSelector((state) => state.playlist.filteredTracks);
+  // const [tracks, setTracks] = useState<trackType[]>([]);
 
-  useEffect(() => {
-    getTracks()
-      .then((tracksData) => {
-        dispatch(setDefaultPlaylist(tracksData));
-        setTracks(tracksData);
-      })
-      .catch((error) => {
-        return <ErrorPage error={error} reset={() => {}} />;
-      });
-  }, [dispatch]);
+  // useEffect(() => {
+  //   getTracks()
+  //     .then((tracksData) => {
+  //       dispatch(setDefaultPlaylist(tracksData));
+  //       setTracks(tracksData);
+  //     })
+  //     .catch((error) => {
+  //       return <ErrorPage error={error} reset={() => {}} />;
+  //     });
+  // }, [dispatch]);
 
   return (
     <div className={styles.centerblockContent}>
@@ -47,7 +44,7 @@ export default function Playlist() {
         </div>
       </div>
       <div className={styles.contentPlaylist}>
-        {filteredTracks.map((track) => (
+        {tracks.map((track) => (
           <Track key={track.id} track={track} tracks={tracks} />
         ))}
       </div>
