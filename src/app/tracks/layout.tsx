@@ -4,10 +4,10 @@ import Sidebar from "@/components/Sidebar/Sidebar";
 import styles from "./page.module.css";
 import Search from "@/components/Search/Search";
 import Filter from "@/components/Filter/Filter";
-import Playlist from "@/components/Playlist/Playlist";
 
+export default function TrackLayout ({children}:{children: React.ReactNode}) {
+    
 
-export default function Home() {
   return (
     <div className={styles.wrapper}>
       <div className={styles.container}>
@@ -17,7 +17,7 @@ export default function Home() {
             <Search />
             <h2 className={styles.centerblockH2}>Треки</h2>
             <Filter />
-            <Playlist />
+            {children}
           </div>
           <Sidebar />
         </main>
@@ -27,3 +27,4 @@ export default function Home() {
     </div>
   );
 }
+    
