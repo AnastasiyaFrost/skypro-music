@@ -1,3 +1,4 @@
+'use client'
 import { getTracks } from "@/api/tracks";
 import Playlist from "@/components/Playlist/Playlist";
 import { useAppDispatch, useAppSelector } from "@/hooks";
