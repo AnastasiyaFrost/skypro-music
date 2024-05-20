@@ -16,7 +16,7 @@ export default function TrackLayout ({children}:{children: React.ReactNode}) {
           <div className={styles.mainCenterblock}>
             <Search />
             <h2 className={styles.centerblockH2}>Треки</h2>
-            <Filter />
+            <Filter/>
             {children}
           </div>
           <Sidebar />
